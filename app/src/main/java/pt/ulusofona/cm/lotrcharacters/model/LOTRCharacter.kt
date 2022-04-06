@@ -1,7 +1,10 @@
 package pt.ulusofona.cm.lotrcharacters.model
 
+/**
+ * This must be a pure class, without dependencies of json, parcelable, etc..
+ */
 data class LOTRCharacter(
-    val _id: String,
+    val id: String,
     val birth: String,
     val death: String,
     val gender: String,

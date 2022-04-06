@@ -9,5 +9,29 @@ Uses this API: https://the-one-api.dev/documentation
 Implements 3 different methods to get the API data:
 
 * URLConnection + JSONObject - Standard way, with no dependencies of external libraries
-* OkHttp
-* Retrofit
+* OkHttp + Gson - Higher level but still close to the "wire"
+* Retrofit - Highest level
+
+## Automated tests
+
+Includes JUnit tests for the 3 methods. You can test the actual API request without the emulator!
+
+Disclaimer: The API calls should be mocked but, in this case, the idea is to 
+experiment with the real API. And the number of characters in Tolkien's books shouldn't 
+change in the future :)
+
+## Some remarks
+
+* Uses view binding - you have to include in build.gradle:
+
+      buildFeatures {
+         viewBinding true
+      }
+
+* Uses parcelize - you have to include in build.gradle:
+
+        plugins {
+           ...
+           id 'kotlin-parcelize'
+        }
+

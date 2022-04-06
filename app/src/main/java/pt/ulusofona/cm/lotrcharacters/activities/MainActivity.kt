@@ -8,8 +8,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.launch
+import okhttp3.OkHttpClient
 import pt.ulusofona.cm.lotrcharacters.R
-import pt.ulusofona.cm.lotrcharacters.data.remote.LOTRServiceWithUrlConnection
+import pt.ulusofona.cm.lotrcharacters.data.remote.LOTRServiceWithOkHttp
 import pt.ulusofona.cm.lotrcharacters.databinding.ActivityMainBinding
 import pt.ulusofona.cm.lotrcharacters.ui.viewModels.CharacterUI
 
@@ -29,12 +30,15 @@ class MainActivity : AppCompatActivity() {
 
         binding.getCharactersBtn.setOnClickListener {
 
+//            val service = LOTRServiceWithUrlConnection()
+            val service = LOTRServiceWithOkHttp(OkHttpClient())
+
             CoroutineScope(Dispatchers.IO).launch {
-                LOTRServiceWithUrlConnection().getCharacters {
+                service.getCharacters {
                     Log.i("APP", "Received ${it.size} characters from WS")
                     val charactersUI = ArrayList(it.map { character ->
                         CharacterUI(
-                            character._id,
+                            character.id,
                             character.birth,
                             character.death,
                             character.gender,
