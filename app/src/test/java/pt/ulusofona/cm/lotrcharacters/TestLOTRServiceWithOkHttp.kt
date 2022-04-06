@@ -4,8 +4,7 @@ import okhttp3.OkHttpClient
 import org.junit.Test
 
 import org.junit.Assert.*
-import pt.ulusofona.cm.lotrcharacters.data.remote.LOTRServiceWithOkHttp
-import pt.ulusofona.cm.lotrcharacters.data.remote.LOTRServiceWithUrlConnection
+import pt.ulusofona.cm.lotrcharacters.data.remote.okHttp.LOTRServiceWithOkHttp
 
 class TestLOTRServiceWithOkHttp {
     @Test

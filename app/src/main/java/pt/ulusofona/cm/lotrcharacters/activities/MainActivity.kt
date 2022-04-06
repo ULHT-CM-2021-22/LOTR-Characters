@@ -9,8 +9,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
+import pt.ulusofona.cm.lotrcharacters.LOTR_API_BASE_URL
 import pt.ulusofona.cm.lotrcharacters.R
-import pt.ulusofona.cm.lotrcharacters.data.remote.LOTRServiceWithOkHttp
+import pt.ulusofona.cm.lotrcharacters.data.remote.okHttp.LOTRServiceWithOkHttp
+import pt.ulusofona.cm.lotrcharacters.data.remote.retrofit.LOTRServiceWithRetrofit
+import pt.ulusofona.cm.lotrcharacters.data.remote.retrofit.RetrofitBuilder
 import pt.ulusofona.cm.lotrcharacters.databinding.ActivityMainBinding
 import pt.ulusofona.cm.lotrcharacters.ui.viewModels.CharacterUI
 
@@ -30,8 +33,10 @@ class MainActivity : AppCompatActivity() {
 
         binding.getCharactersBtn.setOnClickListener {
 
+            // comment/uncomment the desired method
 //            val service = LOTRServiceWithUrlConnection()
-            val service = LOTRServiceWithOkHttp(OkHttpClient())
+//            val service = LOTRServiceWithOkHttp(OkHttpClient())
+            val service = LOTRServiceWithRetrofit(RetrofitBuilder.getInstance(LOTR_API_BASE_URL))
 
             CoroutineScope(Dispatchers.IO).launch {
                 service.getCharacters {

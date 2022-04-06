@@ -1,7 +1,9 @@
-package pt.ulusofona.cm.lotrcharacters.data.remote
+package pt.ulusofona.cm.lotrcharacters.data.remote.okHttp
 
 import com.google.gson.Gson
-import okhttp3.*
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.ResponseBody
 import pt.ulusofona.cm.lotrcharacters.LOTR_API_BASE_URL
 import pt.ulusofona.cm.lotrcharacters.LOTR_API_TOKEN
 import pt.ulusofona.cm.lotrcharacters.model.LOTRCharacter
@@ -18,8 +20,8 @@ class LOTRServiceWithOkHttp(val client: OkHttpClient) {
         data class GetCharactersResponse(val docs: List<Character>, val total: Int)
 
         val request: Request = Request.Builder()
-            .url("${LOTR_API_BASE_URL}/character")
-            .addHeader("Authorization", "Bearer ${LOTR_API_TOKEN}")
+            .url("$LOTR_API_BASE_URL/character")
+            .addHeader("Authorization", "Bearer $LOTR_API_TOKEN")
             .build()
 
         val response: ResponseBody? = client.newCall(request).execute().body

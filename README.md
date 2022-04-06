@@ -12,13 +12,15 @@ Implements 3 different methods to get the API data:
 * OkHttp + Gson - Higher level but still close to the "wire"
 * Retrofit - Highest level
 
+You can change the method that is used in MainActivity.onStart()
+
 ## Automated tests
 
-Includes JUnit tests for the 3 methods. You can test the actual API request without the emulator!
+Includes JUnit tests for the 3 methods. You can test the actual API request without running the emulator!
 
 Disclaimer: The API calls should be mocked but, in this case, the idea is to 
 experiment with the real API. And the number of characters in Tolkien's books shouldn't 
-change in the future :)
+change in the future, anyway :)
 
 ## Some remarks
 

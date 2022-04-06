@@ -1,4 +1,4 @@
-package pt.ulusofona.cm.lotrcharacters.data.remote
+package pt.ulusofona.cm.lotrcharacters.data.remote.urlConnection
 
 import org.json.JSONArray
 import org.json.JSONObject
@@ -11,9 +11,9 @@ class LOTRServiceWithUrlConnection {
 
     fun getCharacters(onFinished: (List<LOTRCharacter>) -> Unit) {
 
-        val url = URL("${LOTR_API_BASE_URL}/character")
+        val url = URL("$LOTR_API_BASE_URL/character")
         val connection = url.openConnection()
-        connection.setRequestProperty("Authorization", "Bearer ${LOTR_API_TOKEN}")
+        connection.setRequestProperty("Authorization", "Bearer $LOTR_API_TOKEN")
         val response = connection.getInputStream().bufferedReader().readText()
 
         val jsonObject = JSONObject(response)

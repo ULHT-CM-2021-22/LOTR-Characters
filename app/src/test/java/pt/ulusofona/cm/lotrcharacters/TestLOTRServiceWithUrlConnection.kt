@@ -3,7 +3,7 @@ package pt.ulusofona.cm.lotrcharacters
 import org.junit.Test
 
 import org.junit.Assert.*
-import pt.ulusofona.cm.lotrcharacters.data.remote.LOTRServiceWithUrlConnection
+import pt.ulusofona.cm.lotrcharacters.data.remote.urlConnection.LOTRServiceWithUrlConnection
 
 class TestLOTRServiceWithUrlConnection {
     @Test
