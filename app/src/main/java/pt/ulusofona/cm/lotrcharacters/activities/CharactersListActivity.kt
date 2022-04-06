@@ -1,7 +1,9 @@
 package pt.ulusofona.cm.lotrcharacters.activities
 
+import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import pt.ulusofona.cm.lotrcharacters.R
 import pt.ulusofona.cm.lotrcharacters.databinding.ActivityCharactersListBinding
@@ -24,6 +26,8 @@ class CharactersListActivity : AppCompatActivity() {
 
         binding.charactersListRv.layoutManager = LinearLayoutManager(this)
         binding.charactersListRv.adapter = CharacterListAdapter(characters)
+        // add a divider between items of the list
+        binding.charactersListRv.addItemDecoration(DividerItemDecoration(this, LinearLayoutManager.VERTICAL))
 
     }
 }
