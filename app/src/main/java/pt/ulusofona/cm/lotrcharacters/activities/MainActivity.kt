@@ -7,17 +7,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
 import kotlinx.coroutines.launch
-import okhttp3.OkHttpClient
-import pt.ulusofona.cm.lotrcharacters.LOTR_API_BASE_URL
 import pt.ulusofona.cm.lotrcharacters.R
-import pt.ulusofona.cm.lotrcharacters.data.remote.okHttp.LOTRServiceWithOkHttp
-import pt.ulusofona.cm.lotrcharacters.data.remote.retrofit.LOTRServiceWithRetrofit
-import pt.ulusofona.cm.lotrcharacters.data.remote.retrofit.RetrofitBuilder
 import pt.ulusofona.cm.lotrcharacters.databinding.ActivityMainBinding
-import pt.ulusofona.cm.lotrcharacters.model.LOTR
-import pt.ulusofona.cm.lotrcharacters.ui.viewModels.CharacterUI
 import pt.ulusofona.cm.lotrcharacters.ui.viewModels.LOTRViewModel
 
 class MainActivity : AppCompatActivity() {
@@ -43,7 +35,7 @@ class MainActivity : AppCompatActivity() {
                 // call getCharacters on the "IO Thread"
                 viewModel.getCharacters { charactersUI ->
                     // process the result in the "Main Thread" since it will change the view
-                    CoroutineScope(Dispatchers.Default).launch {
+                    CoroutineScope(Dispatchers.Main).launch {
                         val intent = Intent(this@MainActivity, CharactersListActivity::class.java)
                         Log.i("APP", "Passing ${charactersUI.size} characters to CharactersListActivity")
                         intent.putParcelableArrayListExtra("characters", charactersUI)
