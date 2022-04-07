@@ -8,7 +8,6 @@ import androidx.lifecycle.ViewModelProvider
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import pt.ulusofona.cm.lotrcharacters.R
 import pt.ulusofona.cm.lotrcharacters.databinding.ActivityMainBinding
 import pt.ulusofona.cm.lotrcharacters.ui.viewModels.LOTRViewModel
 
@@ -20,7 +19,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
