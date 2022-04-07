@@ -6,11 +6,12 @@ import okhttp3.Request
 import okhttp3.ResponseBody
 import pt.ulusofona.cm.lotrcharacters.LOTR_API_BASE_URL
 import pt.ulusofona.cm.lotrcharacters.LOTR_API_TOKEN
+import pt.ulusofona.cm.lotrcharacters.model.LOTR
 import pt.ulusofona.cm.lotrcharacters.model.LOTRCharacter
 
-class LOTRServiceWithOkHttp(val client: OkHttpClient) {
+class LOTRServiceWithOkHttp(val client: OkHttpClient): LOTR() {
 
-    fun getCharacters(onFinished: (List<LOTRCharacter>) -> Unit) {
+    override fun getCharacters(onFinished: (List<LOTRCharacter>) -> Unit) {
 
         // only used for parsing JSON response
         data class Character(val _id: String, val birth: String,

@@ -5,12 +5,13 @@ import okhttp3.Request
 import okhttp3.ResponseBody
 import pt.ulusofona.cm.lotrcharacters.LOTR_API_BASE_URL
 import pt.ulusofona.cm.lotrcharacters.LOTR_API_TOKEN
+import pt.ulusofona.cm.lotrcharacters.model.LOTR
 import pt.ulusofona.cm.lotrcharacters.model.LOTRCharacter
 import retrofit2.Retrofit
 
-class LOTRServiceWithRetrofit(val retrofit: Retrofit) {
+class LOTRServiceWithRetrofit(val retrofit: Retrofit): LOTR() {
 
-    fun getCharacters(onFinished: (List<LOTRCharacter>) -> Unit) {
+    override fun getCharacters(onFinished: (List<LOTRCharacter>) -> Unit) {
 
         val service = retrofit.create(LOTRService::class.java)
 

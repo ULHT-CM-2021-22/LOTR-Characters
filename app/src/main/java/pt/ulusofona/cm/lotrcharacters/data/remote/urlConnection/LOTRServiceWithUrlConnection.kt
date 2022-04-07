@@ -4,12 +4,13 @@ import org.json.JSONArray
 import org.json.JSONObject
 import pt.ulusofona.cm.lotrcharacters.LOTR_API_BASE_URL
 import pt.ulusofona.cm.lotrcharacters.LOTR_API_TOKEN
+import pt.ulusofona.cm.lotrcharacters.model.LOTR
 import pt.ulusofona.cm.lotrcharacters.model.LOTRCharacter
 import java.net.URL
 
-class LOTRServiceWithUrlConnection {
+class LOTRServiceWithUrlConnection: LOTR() {
 
-    fun getCharacters(onFinished: (List<LOTRCharacter>) -> Unit) {
+    override fun getCharacters(onFinished: (List<LOTRCharacter>) -> Unit) {
 
         val url = URL("$LOTR_API_BASE_URL/character")
         val connection = url.openConnection()
