@@ -7,5 +7,5 @@ import kotlinx.parcelize.Parcelize
 data class CharacterUI(val _id: String,
                        val birth: String,
                        val death: String,
-                       val gender: String,
+                       val gender: String?,
                        val name: String) : Parcelable

@@ -28,7 +28,7 @@ class LOTRServiceWithUrlConnection: LOTR() {
                     jsonCharacter["_id"].toString(),
                     jsonCharacter["birth"].toString(),
                     jsonCharacter["death"].toString(),
-                    if (jsonCharacter.has("gender")) jsonCharacter["gender"].toString() else "Undefined",
+                    if (jsonCharacter.has("gender")) jsonCharacter["gender"].toString() else null,
                     jsonCharacter["name"].toString()
                 )
             )

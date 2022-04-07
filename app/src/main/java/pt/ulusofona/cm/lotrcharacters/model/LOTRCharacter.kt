@@ -7,6 +7,6 @@ data class LOTRCharacter(
     val id: String,
     val birth: String,
     val death: String,
-    val gender: String,
+    val gender: String?,  // gender is optional
     val name: String
 )
