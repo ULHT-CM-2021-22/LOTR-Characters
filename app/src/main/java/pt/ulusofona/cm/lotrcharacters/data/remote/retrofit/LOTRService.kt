@@ -16,5 +16,5 @@ interface LOTRService {
 
     @Headers("Authorization: Bearer ${LOTR_API_TOKEN}")
     @GET("character")
-    fun getCharacters(): Call<GetCharactersResponse>
+    suspend fun getCharacters(): GetCharactersResponse
 }
