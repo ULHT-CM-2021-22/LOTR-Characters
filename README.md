@@ -12,7 +12,7 @@ Implements 3 different methods to get the API data:
 * OkHttp + Gson - Higher level but still close to the "wire"
 * Retrofit - Highest level
 
-You can change the method that is used in MainActivity.onStart()
+You can change the method that is used in LOTRViewModel
 
 ## Automated tests
 
@@ -37,3 +37,4 @@ change in the future, anyway :)
            id 'kotlin-parcelize'
         }
 
+* Uses suspend functions in retrofit, to simplify code and ease debugging. Requires retrofit 2.6.0+
