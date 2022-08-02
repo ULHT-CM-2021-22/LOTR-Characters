@@ -6,6 +6,7 @@ import org.junit.Assert.*
 import pt.ulusofona.cm.lotrcharacters.data.remote.urlConnection.LOTRServiceWithUrlConnection
 
 class TestLOTRServiceWithUrlConnection {
+
     @Test
     fun getCharacters() {
 
