@@ -24,7 +24,7 @@ class LOTRServiceWithRetrofit(val retrofit: Retrofit,
 
             try {
                 val responseObj: GetCharactersResponse = service.getCharacters()
-                onFinished(responseObj?.docs?.map {
+                onFinished(responseObj.docs.map {
                     LOTRCharacter(it._id, it.birth, it.death, it.gender.orEmpty(), it.name)
                 })
             } catch (e: HttpException) {
