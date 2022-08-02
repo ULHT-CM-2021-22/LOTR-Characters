@@ -9,7 +9,7 @@ import pt.ulusofona.cm.lotrcharacters.LOTR_API_TOKEN
 import pt.ulusofona.cm.lotrcharacters.model.LOTR
 import pt.ulusofona.cm.lotrcharacters.model.LOTRCharacter
 
-class LOTRServiceWithOkHttp(val client: OkHttpClient): LOTR() {
+class LOTRServiceWithOkHttpAndGson(val client: OkHttpClient): LOTR() {
 
     override fun getCharacters(onFinished: (List<LOTRCharacter>) -> Unit) {
 

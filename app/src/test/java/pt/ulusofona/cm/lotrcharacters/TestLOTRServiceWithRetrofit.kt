@@ -7,10 +7,13 @@ import org.junit.Test
 import pt.ulusofona.cm.lotrcharacters.data.remote.retrofit.LOTRServiceWithRetrofit
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.CountDownLatch
 
 class TestLOTRServiceWithRetrofit {
     @Test
     fun getCharacters() = runBlocking {
+
+        val latch = CountDownLatch(1)
 
         val retrofit = Retrofit.Builder()
             .baseUrl(LOTR_API_BASE_URL)
@@ -21,10 +24,10 @@ class TestLOTRServiceWithRetrofit {
         service.getCharacters {
             assertEquals(933, it.size)
             assertEquals("Adanel", it[0].name)
-            println("Everything ok")   // to make sure this actually runs
+            latch.countDown()
         }
 
         // to wait for the response
-        delay(1000)
+        latch.await()
     }
 }

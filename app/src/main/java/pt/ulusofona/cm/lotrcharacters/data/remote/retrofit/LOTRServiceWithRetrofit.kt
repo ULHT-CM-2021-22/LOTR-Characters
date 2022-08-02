@@ -1,6 +1,7 @@
 package pt.ulusofona.cm.lotrcharacters.data.remote.retrofit
 
 import com.google.gson.Gson
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -13,11 +14,12 @@ import pt.ulusofona.cm.lotrcharacters.model.LOTRCharacter
 import retrofit2.HttpException
 import retrofit2.Retrofit
 
-class LOTRServiceWithRetrofit(val retrofit: Retrofit): LOTR() {
+class LOTRServiceWithRetrofit(val retrofit: Retrofit,
+                              private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO): LOTR() {
 
     override fun getCharacters(onFinished: (List<LOTRCharacter>) -> Unit) {
 
-        CoroutineScope(Dispatchers.IO).launch {
+        CoroutineScope(ioDispatcher).launch {
             val service = retrofit.create(LOTRService::class.java)
 
             try {
