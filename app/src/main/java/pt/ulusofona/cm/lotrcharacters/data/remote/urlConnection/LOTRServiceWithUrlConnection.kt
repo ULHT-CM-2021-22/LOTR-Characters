@@ -8,11 +8,11 @@ import pt.ulusofona.cm.lotrcharacters.model.LOTR
 import pt.ulusofona.cm.lotrcharacters.model.LOTRCharacter
 import java.net.URL
 
-class LOTRServiceWithUrlConnection: LOTR() {
+class LOTRServiceWithUrlConnection(private val baseUrl: String = LOTR_API_BASE_URL): LOTR() {
 
     override fun getCharacters(onFinished: (List<LOTRCharacter>) -> Unit) {
 
-        val url = URL("$LOTR_API_BASE_URL/character")
+        val url = URL("$baseUrl/character")
         val connection = url.openConnection()
         connection.setRequestProperty("Authorization", "Bearer $LOTR_API_TOKEN")
         val response = connection.getInputStream().bufferedReader().readText()

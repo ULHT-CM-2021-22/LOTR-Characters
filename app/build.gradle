@@ -60,5 +60,8 @@ dependencies {
 
     // need this to be able to test JSONObject in junit
     testImplementation 'org.json:json:20220320'
-    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4'
+
+    // need this to mock server responses
+    testImplementation "com.squareup.okhttp3:mockwebserver:4.10.0"
+
 }

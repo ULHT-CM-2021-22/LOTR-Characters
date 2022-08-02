@@ -3,6 +3,7 @@ package pt.ulusofona.cm.lotrcharacters
 import kotlinx.coroutines.runBlocking
 import okhttp3.OkHttpClient
 import org.junit.Assert.assertEquals
+import org.junit.Ignore
 import org.junit.Test
 import pt.ulusofona.cm.lotrcharacters.data.remote.okHttp.LOTRServiceWithOkHttpAndGson
 import pt.ulusofona.cm.lotrcharacters.data.remote.okHttp.LOTRServiceWithOkHttpAndJSONObject
@@ -13,6 +14,7 @@ import java.util.concurrent.TimeUnit
 class TestLOTRServiceWithOkHttp {
 
     @Test
+    @Ignore
     fun getCharactersWithGson() {
 
         val client = OkHttpClient()
@@ -28,6 +30,7 @@ class TestLOTRServiceWithOkHttp {
      * await for the execution
      */
     @Test
+    @Ignore
     fun getCharactersWithJSONObject() = runBlocking {
 
         val latch = CountDownLatch(1)  // count starts with 1

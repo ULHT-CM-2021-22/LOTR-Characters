@@ -3,6 +3,7 @@ package pt.ulusofona.cm.lotrcharacters
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
+import org.junit.Ignore
 import org.junit.Test
 import pt.ulusofona.cm.lotrcharacters.data.remote.retrofit.LOTRServiceWithRetrofit
 import pt.ulusofona.cm.lotrcharacters.model.LOTRCharacter
@@ -12,7 +13,9 @@ import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 
 class TestLOTRServiceWithRetrofit {
+
     @Test
+    @Ignore
     fun getCharacters() = runBlocking {
 
         val latch = CountDownLatch(1)  // count = 1
