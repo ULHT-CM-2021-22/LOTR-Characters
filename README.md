@@ -31,9 +31,7 @@ You should always use async calls in Android applications, to prevent blocking t
 
 Includes JUnit tests for the 4 methods. You can test the actual API request without running the emulator!
 
-Disclaimer: The API calls should be mocked but, in this case, the idea is to 
-experiment with the real API. And the number of characters in Tolkien's books shouldn't 
-change in the future, anyway :)
+Uses MockWebserver (okhttp) to mock the real server
 
 ## Some remarks
 
@@ -51,3 +49,7 @@ change in the future, anyway :)
         }
 
 * Uses suspend functions in retrofit, to simplify code and ease debugging. Requires retrofit 2.6.0+
+
+* Uses mockwebserver - you have to include this dependency in build.grade
+
+        testImplementation "com.squareup.okhttp3:mockwebserver:4.10.0"

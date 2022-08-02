@@ -2,23 +2,29 @@ package pt.ulusofona.cm.lotrcharacters
 
 import kotlinx.coroutines.runBlocking
 import okhttp3.OkHttpClient
+import okhttp3.mockwebserver.MockResponse
+import okhttp3.mockwebserver.MockWebServer
+import org.junit.After
 import org.junit.Assert.assertEquals
+import org.junit.Before
 import org.junit.Ignore
 import org.junit.Test
 import pt.ulusofona.cm.lotrcharacters.data.remote.okHttp.LOTRServiceWithOkHttpAndGson
 import pt.ulusofona.cm.lotrcharacters.data.remote.okHttp.LOTRServiceWithOkHttpAndJSONObject
 import pt.ulusofona.cm.lotrcharacters.model.LOTRCharacter
+import java.io.File
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 
-class TestLOTRServiceWithOkHttp {
+class TestLOTRServiceWithOkHttp: BaseMockWebserverTest() {
 
     @Test
-    @Ignore
     fun getCharactersWithGson() {
 
+        server.enqueue(MockResponse().setBody(mockResponse))
+
         val client = OkHttpClient()
-        val service = LOTRServiceWithOkHttpAndGson(client)
+        val service = LOTRServiceWithOkHttpAndGson(server.url("").toString(), client)
         service.getCharacters {
             assertEquals(933, it.size)
             assertEquals("Adanel", it[0].name)
@@ -30,13 +36,14 @@ class TestLOTRServiceWithOkHttp {
      * await for the execution
      */
     @Test
-    @Ignore
     fun getCharactersWithJSONObject() = runBlocking {
+
+        server.enqueue(MockResponse().setBody(mockResponse))
 
         val latch = CountDownLatch(1)  // count starts with 1
 
         val client = OkHttpClient()
-        val service = LOTRServiceWithOkHttpAndJSONObject(client)
+        val service = LOTRServiceWithOkHttpAndJSONObject(server.url("").toString(), client)
 
         val result = mutableMapOf<String,List<LOTRCharacter>>()
         service.getCharacters {
@@ -50,5 +57,7 @@ class TestLOTRServiceWithOkHttp {
         assertEquals(933, result["list"]?.size)
         assertEquals("Adanel", result["list"]?.get(0)?.name)
     }
+
+
 
 }

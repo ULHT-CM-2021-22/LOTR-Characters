@@ -10,12 +10,13 @@ import pt.ulusofona.cm.lotrcharacters.model.LOTR
 import pt.ulusofona.cm.lotrcharacters.model.LOTRCharacter
 import java.io.IOException
 
-class LOTRServiceWithOkHttpAndJSONObject(val client: OkHttpClient) : LOTR() {
+class LOTRServiceWithOkHttpAndJSONObject(val baseUrl: String = LOTR_API_BASE_URL,
+                                         val client: OkHttpClient) : LOTR() {
 
     override fun getCharacters(onFinished: (List<LOTRCharacter>) -> Unit) {
 
         val request: Request = Request.Builder()
-            .url("$LOTR_API_BASE_URL/character")
+            .url("$baseUrl/character")
             .addHeader("Authorization", "Bearer $LOTR_API_TOKEN")
             .build()
 

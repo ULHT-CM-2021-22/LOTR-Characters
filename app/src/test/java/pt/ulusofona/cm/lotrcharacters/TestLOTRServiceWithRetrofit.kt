@@ -2,6 +2,7 @@ package pt.ulusofona.cm.lotrcharacters
 
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
+import okhttp3.mockwebserver.MockResponse
 import org.junit.Assert.assertEquals
 import org.junit.Ignore
 import org.junit.Test
@@ -12,16 +13,17 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 
-class TestLOTRServiceWithRetrofit {
+class TestLOTRServiceWithRetrofit: BaseMockWebserverTest() {
 
     @Test
-    @Ignore
     fun getCharacters() = runBlocking {
+
+        server.enqueue(MockResponse().setBody(mockResponse))
 
         val latch = CountDownLatch(1)  // count = 1
 
         val retrofit = Retrofit.Builder()
-            .baseUrl(LOTR_API_BASE_URL)
+            .baseUrl(server.url(""))
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 

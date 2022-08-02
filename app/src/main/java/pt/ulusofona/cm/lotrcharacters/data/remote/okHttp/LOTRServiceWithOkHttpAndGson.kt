@@ -9,7 +9,7 @@ import pt.ulusofona.cm.lotrcharacters.LOTR_API_TOKEN
 import pt.ulusofona.cm.lotrcharacters.model.LOTR
 import pt.ulusofona.cm.lotrcharacters.model.LOTRCharacter
 
-class LOTRServiceWithOkHttpAndGson(val client: OkHttpClient): LOTR() {
+class LOTRServiceWithOkHttpAndGson(val baseUrl: String = LOTR_API_BASE_URL, val client: OkHttpClient): LOTR() {
 
     override fun getCharacters(onFinished: (List<LOTRCharacter>) -> Unit) {
 
@@ -21,7 +21,7 @@ class LOTRServiceWithOkHttpAndGson(val client: OkHttpClient): LOTR() {
         data class GetCharactersResponse(val docs: List<Character>, val total: Int)
 
         val request: Request = Request.Builder()
-            .url("$LOTR_API_BASE_URL/character")
+            .url("$baseUrl/character")
             .addHeader("Authorization", "Bearer $LOTR_API_TOKEN")
             .build()
 
