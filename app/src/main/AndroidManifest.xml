@@ -10,7 +10,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.LOTRCharacters" >
+        android:theme="@style/Theme.LOTRCharacters"
+        android:usesCleartextTraffic="true"> <!-- usesCleartextTraffic is needed just for instrumentation tests with mockwebserver -->
         <activity
             android:name=".activities.CharactersListActivity"
             android:exported="false" />

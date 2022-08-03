@@ -29,9 +29,24 @@ You should always use async calls in Android applications, to prevent blocking t
 
 ## Automated tests
 
-Includes JUnit tests for the 4 methods. You can test the actual API request without running the emulator!
-
 Uses MockWebserver (okhttp) to mock the real server
+
+### Unit tests
+
+*Located on app/src/test*
+
+Includes JUnit tests for the 4 methods. Since these are standard JUnit tests, you can run them 
+without running the emulator!
+
+### Instrumentation tests
+
+*Located on app/src/androidTest*
+
+These tests launch the application on an emulator and simulate clicking the "Get Characters" button 
+and checking the resulting list.
+
+The tricky part is passing the mock web server to the activity. This is done within the onActivity() 
+callback, from which we have access to the actual Activity instance and can inject stuff.
 
 ## Some remarks
 
@@ -43,13 +58,17 @@ Uses MockWebserver (okhttp) to mock the real server
 
 * Uses parcelize - you have to include in build.gradle:
 
-        plugins {
-           ...
-           id 'kotlin-parcelize'
-        }
+      plugins {
+         ...
+         id 'kotlin-parcelize'
+      }
 
 * Uses suspend functions in retrofit, to simplify code and ease debugging. Requires retrofit 2.6.0+
 
-* Uses mockwebserver - you have to include this dependency in build.grade
+* Uses mockwebserver for testing - you have to include this dependency in build.gradle
 
-        testImplementation "com.squareup.okhttp3:mockwebserver:4.10.0"
+      testImplementation "com.squareup.okhttp3:mockwebserver:4.10.0"
+
+* To use mockwebserver on instrumented tests, you have to include this line in androidmanifest.xml:
+
+      android:usesCleartextTraffic="true"

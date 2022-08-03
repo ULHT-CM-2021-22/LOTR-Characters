@@ -1,17 +1,17 @@
 package pt.ulusofona.cm.lotrcharacters.ui.viewModels
 
 import android.util.Log
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.ViewModel
 import pt.ulusofona.cm.lotrcharacters.LOTR_API_BASE_URL
-import pt.ulusofona.cm.lotrcharacters.data.remote.okHttp.LOTRServiceWithOkHttpAndGson
-import pt.ulusofona.cm.lotrcharacters.data.remote.okHttp.LOTRServiceWithOkHttpAndJSONObject
 import pt.ulusofona.cm.lotrcharacters.data.remote.retrofit.LOTRServiceWithRetrofit
 import pt.ulusofona.cm.lotrcharacters.data.remote.retrofit.RetrofitBuilder
 import pt.ulusofona.cm.lotrcharacters.model.LOTR
 
 class LOTRViewModel: ViewModel() {
 
-    private val model: LOTR =
+    @VisibleForTesting
+    var model: LOTR =
         // comment/uncomment the desired method
 //              LOTRServiceWithUrlConnection()
 //              LOTRServiceWithOkHttpAndGson(OkHttpClient())
@@ -19,6 +19,8 @@ class LOTRViewModel: ViewModel() {
         LOTRServiceWithRetrofit(RetrofitBuilder.getInstance(LOTR_API_BASE_URL))
 
     fun getCharacters(onFinished: (ArrayList<CharacterUI>) -> Unit) {
+
+        Log.i("APP", "ViewModel.getCharacters")
 
         // transforms "pure" LOTRCharacters into parcelable UICharacters
         model.getCharacters {
