@@ -8,10 +8,10 @@ Uses this API: https://the-one-api.dev/documentation
 
 Implements 4 different methods to get the API data:
 
-* URLConnection + JSONObject - Standard way, with no dependencies of external libraries
-* OkHttp + JSONObject - Better communication layer but parsing still done "by hand"
-* OkHttp + Gson - Higher level but still close to the "wire"
-* Retrofit - Highest level
+* `URLConnection + JSONObject` - Standard way, with no dependencies of external libraries
+* `OkHttp + JSONObject` - Better communication layer but parsing still done "by hand"
+* `OkHttp + Gson` - Higher level but still close to the "wire"
+* `Retrofit` - Highest level
 
 You can change the method that is used in LOTRViewModel
 
@@ -19,13 +19,13 @@ You can change the method that is used in LOTRViewModel
 
 To experience the differences between sync and async calls, there is a mixture of both types.
 
-URLConnection + JSONObject and OkHttp + Gson are executed synchronously (i.e., the call 
+`URLConnection + JSONObject` and `OkHttp + Gson` are executed synchronously (i.e., the call 
 blocks until it gets a response from the server)
 
-OkHttp + JSONObject + Retrofit are executed asynchronously (i.e., the execution continues and 
+`OkHttp + JSONObject` and `Retrofit` are executed asynchronously (i.e., the execution continues and 
 a callback is called when it gets a response from the server)
 
-You should always use async calls in Android applications, to prevent blocking the main thread.
+Note: You should always use async calls in Android applications, to prevent blocking the main thread.
 
 ## Automated tests
 
@@ -47,6 +47,19 @@ and checking the resulting list.
 
 The tricky part is passing the mock web server to the activity. This is done within the onActivity() 
 callback, from which we have access to the actual Activity instance and can inject stuff.
+
+## Github actions
+
+This project is automatically checked on each push, using [github actions](https://github.com/features/actions).
+
+You can check the current configuration on `.github/workflows.build.yml`.
+
+There are two jobs:
+
+* checks_and_tests - runs `gradlew check`, which compiles and runs all the unit tests
+* integration_tests - runs `gradlew checkConnected`, which runs all instrumentation tests. Since these
+tests need to run in an emulator, I use the fantastic 
+[reactivecircus/android-emulator-runner](https://github.com/ReactiveCircus/android-emulator-runner).
 
 ## Some remarks
 
