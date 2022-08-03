@@ -71,7 +71,7 @@ class TestApplication {
 
     @Test
     fun showsInitialButton() {
-        onView(withId(R.id.getCharactersBtn)).check(matches(withText("Get Characters")))
+        onView(withId(R.id.getCharactersBtn)).check(matches(withText("Set Characters")))
     }
 
     @Test
