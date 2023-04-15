@@ -29,10 +29,10 @@ class TestLOTRServiceWithRetrofit: BaseMockWebserverTest() {
 
         val service = LOTRServiceWithRetrofit(retrofit)
         val result = mutableMapOf<String,List<LOTRCharacter>>()
-        service.getCharacters {
+        service.getCharacters(onFinished =  {
             result["list"] = it
             latch.countDown()  // count--
-        }
+        })
 
         // to wait for the response
         latch.await(1000, TimeUnit.MILLISECONDS) // suspends until count == 0

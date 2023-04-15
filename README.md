@@ -76,6 +76,11 @@ tests need to run in an emulator, I use the fantastic
          id 'kotlin-parcelize'
       }
 
+* Remote calls receive 3 callbacks (only the first is mandatory):
+  * onFinished - called when the server returned the message and it was ok
+  * onError - called when there was an error communicating with the server or the response was not ok
+  * onLoading - called just before initiating the remote request (useful to show a progress indicator)
+
 * Uses suspend functions in retrofit, to simplify code and ease debugging. Requires retrofit 2.6.0+
 
 * Uses mockwebserver for testing - you have to include this dependency in build.gradle

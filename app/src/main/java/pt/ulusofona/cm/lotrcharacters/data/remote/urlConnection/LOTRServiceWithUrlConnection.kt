@@ -10,7 +10,9 @@ import java.net.URL
 
 class LOTRServiceWithUrlConnection(private val baseUrl: String = LOTR_API_BASE_URL): LOTR() {
 
-    override fun getCharacters(onFinished: (List<LOTRCharacter>) -> Unit) {
+    override fun getCharacters(onFinished: (List<LOTRCharacter>) -> Unit,
+                                onError: ((Exception) -> Unit)?,
+                                onLoading: (() -> Unit)?) {
 
         val url = URL("$baseUrl/character")
         val connection = url.openConnection()

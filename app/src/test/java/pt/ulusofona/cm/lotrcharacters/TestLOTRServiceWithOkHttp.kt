@@ -25,10 +25,10 @@ class TestLOTRServiceWithOkHttp: BaseMockWebserverTest() {
 
         val client = OkHttpClient()
         val service = LOTRServiceWithOkHttpAndGson(server.url("").toString(), client)
-        service.getCharacters {
+        service.getCharacters(onFinished =  {
             assertEquals(933, it.size)
             assertEquals("Adanel", it[0].name)
-        }
+        })
     }
 
     /**
@@ -46,10 +46,10 @@ class TestLOTRServiceWithOkHttp: BaseMockWebserverTest() {
         val service = LOTRServiceWithOkHttpAndJSONObject(server.url("").toString(), client)
 
         val result = mutableMapOf<String,List<LOTRCharacter>>()
-        service.getCharacters {
+        service.getCharacters(onFinished = {
             result["list"] = it
             latch.countDown()  // count--
-        }
+        })
 
         // to wait for the response
         latch.await(1000, TimeUnit.MILLISECONDS) // suspends until count == 0
