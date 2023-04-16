@@ -1,6 +1,5 @@
 package pt.ulusofona.cm.lotrcharacters.data.remote.okHttp
 
-import com.google.gson.Gson
 import okhttp3.*
 import org.json.JSONArray
 import org.json.JSONObject
@@ -13,36 +12,32 @@ import java.io.IOException
 class LOTRServiceWithOkHttpAndJSONObject(val baseUrl: String = LOTR_API_BASE_URL,
                                          val client: OkHttpClient) : LOTR() {
 
-    override fun getCharacters(onFinished: (List<LOTRCharacter>) -> Unit,
-                               onError: ((Exception) -> Unit)?,
-                               onLoading: (() -> Unit)?) {
+    override fun getCharacters(onFinished: (Result<List<LOTRCharacter>>) -> Unit) {
 
         val request: Request = Request.Builder()
             .url("$baseUrl/character")
             .addHeader("Authorization", "Bearer $LOTR_API_TOKEN")
             .build()
 
-        onLoading?.invoke()
-
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
-                onError?.invoke(e)
+                onFinished(Result.failure(e))
             }
 
             override fun onResponse(call: Call, response: Response) {
                 response.apply {
                     if (!response.isSuccessful) {
-                        onError?.invoke(IOException("Unexpected code $response"))
+                        onFinished(Result.failure(IOException("Unexpected code $response")))
                     } else {
                         val body = response.body?.string()
                         if (body != null) {
                             val jsonObject = JSONObject(body)
                             val jsonCharactersList = jsonObject["docs"] as JSONArray
-                            val result = mutableListOf<LOTRCharacter>()
+                            val lotrCharacters = mutableListOf<LOTRCharacter>()
                             for (i in 0 until jsonCharactersList.length()) {
                                 val jsonCharacter = jsonCharactersList[i] as JSONObject
 
-                                result.add(
+                                lotrCharacters.add(
                                     LOTRCharacter(
                                         jsonCharacter["_id"].toString(),
                                         jsonCharacter["birth"].toString(),
@@ -53,7 +48,7 @@ class LOTRServiceWithOkHttpAndJSONObject(val baseUrl: String = LOTR_API_BASE_URL
                                 )
                             }
 
-                            onFinished(result)
+                            onFinished(Result.success(lotrCharacters))
                         }
                     }
 

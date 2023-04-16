@@ -19,10 +19,12 @@ class TestLOTRServiceWithUrlConnection: BaseMockWebserverTest() {
 
         // call the constructor with no args, if you want to connect with the real server
         val service = LOTRServiceWithUrlConnection(server.url("").toString())
-        service.getCharacters(onFinished =  {
-            assertEquals(933, it.size)
-            assertEquals("Adanel", it[0].name)
-        })
+        service.getCharacters {
+            assertTrue(it.isSuccess)
+            val characters = it.getOrNull()!!
+            assertEquals(933, characters.size)
+            assertEquals("Adanel", characters[0].name)
+        }
 
 
     }

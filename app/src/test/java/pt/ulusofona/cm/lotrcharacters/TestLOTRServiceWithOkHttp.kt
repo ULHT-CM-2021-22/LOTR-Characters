@@ -6,6 +6,7 @@ import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.After
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Ignore
 import org.junit.Test
@@ -25,10 +26,12 @@ class TestLOTRServiceWithOkHttp: BaseMockWebserverTest() {
 
         val client = OkHttpClient()
         val service = LOTRServiceWithOkHttpAndGson(server.url("").toString(), client)
-        service.getCharacters(onFinished =  {
-            assertEquals(933, it.size)
-            assertEquals("Adanel", it[0].name)
-        })
+        service.getCharacters {
+            assertTrue(it.isSuccess)
+            val characters = it.getOrNull()!!
+            assertEquals(933, characters.size)
+            assertEquals("Adanel", characters[0].name)
+        }
     }
 
     /**
@@ -46,10 +49,11 @@ class TestLOTRServiceWithOkHttp: BaseMockWebserverTest() {
         val service = LOTRServiceWithOkHttpAndJSONObject(server.url("").toString(), client)
 
         val result = mutableMapOf<String,List<LOTRCharacter>>()
-        service.getCharacters(onFinished = {
-            result["list"] = it
+        service.getCharacters {
+            assertTrue(it.isSuccess)
+            result["list"] = it.getOrNull()!!
             latch.countDown()  // count--
-        })
+        }
 
         // to wait for the response
         latch.await(1000, TimeUnit.MILLISECONDS) // suspends until count == 0

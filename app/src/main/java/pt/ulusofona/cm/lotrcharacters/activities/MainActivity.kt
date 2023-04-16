@@ -33,10 +33,15 @@ class MainActivity : AppCompatActivity() {
         super.onStart()
 
         binding.getCharactersBtn.setOnClickListener {
+
+            // show a circular progress indicator
+            binding.getCharactersBtn.visibility = View.INVISIBLE
+            binding.progressBar.visibility = View.VISIBLE
+
             CoroutineScope(Dispatchers.IO).launch {
                 // call getCharacters on the "IO Thread"
                 viewModel.getCharacters(
-                    onFinished =  { charactersUI ->
+                    onSuccess =  { charactersUI ->
                             // process the result in the "Main Thread" since it will change the view
                             CoroutineScope(Dispatchers.Main).launch {
                                 val intent = Intent(this@MainActivity, CharactersListActivity::class.java)
@@ -45,7 +50,7 @@ class MainActivity : AppCompatActivity() {
                                 startActivity(intent)
                             }
                     },
-                    onError = {
+                    onFailure = {
                         CoroutineScope(Dispatchers.Main).launch {
 
                             // show a dialog
@@ -60,13 +65,6 @@ class MainActivity : AppCompatActivity() {
                             // dismiss the circular progress indicator
                             binding.getCharactersBtn.visibility = View.VISIBLE
                             binding.progressBar.visibility = View.INVISIBLE
-                        }
-
-                    },
-                    onLoading = {  // make sure that changes to the view are done in the Main Thread
-                        CoroutineScope(Dispatchers.Main).launch {
-                            binding.getCharactersBtn.visibility = View.INVISIBLE
-                            binding.progressBar.visibility = View.VISIBLE
                         }
                     }
                 )

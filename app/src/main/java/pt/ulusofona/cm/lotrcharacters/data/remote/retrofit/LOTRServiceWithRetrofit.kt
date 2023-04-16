@@ -11,22 +11,18 @@ import retrofit2.Retrofit
 class LOTRServiceWithRetrofit(val retrofit: Retrofit,
                               private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO): LOTR() {
 
-    override fun getCharacters(onFinished: (List<LOTRCharacter>) -> Unit,
-                               onError: ((Exception) -> Unit)?,
-                               onLoading: (() -> Unit)?) {
+    override fun getCharacters(onFinished: (Result<List<LOTRCharacter>>) -> Unit) {
 
         CoroutineScope(ioDispatcher).launch {
             val service = retrofit.create(LOTRService::class.java)
 
             try {
-                onLoading?.invoke()
-
                 val responseObj: GetCharactersResponse = service.getCharacters()
-                onFinished(responseObj.docs.map {
+                onFinished(Result.success(responseObj.docs.map {
                     LOTRCharacter(it._id, it.birth, it.death, it.gender.orEmpty(), it.name)
-                })
+                }))
             } catch (e: Exception) {
-                onError?.invoke(e)
+                onFinished(Result.failure(e))
             }
         }
     }

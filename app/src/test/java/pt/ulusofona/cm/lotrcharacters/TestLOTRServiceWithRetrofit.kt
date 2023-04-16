@@ -3,6 +3,7 @@ package pt.ulusofona.cm.lotrcharacters
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import okhttp3.mockwebserver.MockResponse
+import org.junit.Assert
 import org.junit.Assert.assertEquals
 import org.junit.Ignore
 import org.junit.Test
@@ -29,10 +30,11 @@ class TestLOTRServiceWithRetrofit: BaseMockWebserverTest() {
 
         val service = LOTRServiceWithRetrofit(retrofit)
         val result = mutableMapOf<String,List<LOTRCharacter>>()
-        service.getCharacters(onFinished =  {
-            result["list"] = it
+        service.getCharacters {
+            Assert.assertTrue(it.isSuccess)
+            result["list"] = it.getOrNull()!!
             latch.countDown()  // count--
-        })
+        }
 
         // to wait for the response
         latch.await(1000, TimeUnit.MILLISECONDS) // suspends until count == 0

@@ -10,9 +10,7 @@ import java.net.URL
 
 class LOTRServiceWithUrlConnection(private val baseUrl: String = LOTR_API_BASE_URL): LOTR() {
 
-    override fun getCharacters(onFinished: (List<LOTRCharacter>) -> Unit,
-                                onError: ((Exception) -> Unit)?,
-                                onLoading: (() -> Unit)?) {
+    override fun getCharacters(onFinished: (Result<List<LOTRCharacter>>) -> Unit) {
 
         val url = URL("$baseUrl/character")
         val connection = url.openConnection()
@@ -21,11 +19,11 @@ class LOTRServiceWithUrlConnection(private val baseUrl: String = LOTR_API_BASE_U
 
         val jsonObject = JSONObject(response)
         val jsonCharactersList = jsonObject["docs"] as JSONArray
-        val result = mutableListOf<LOTRCharacter>()
+        val lotrCharacters = mutableListOf<LOTRCharacter>()
         for (i in 0 until jsonCharactersList.length()) {
             val jsonCharacter = jsonCharactersList[i] as JSONObject
 
-            result.add(
+            lotrCharacters.add(
                 LOTRCharacter(
                     jsonCharacter["_id"].toString(),
                     jsonCharacter["birth"].toString(),
@@ -37,6 +35,6 @@ class LOTRServiceWithUrlConnection(private val baseUrl: String = LOTR_API_BASE_U
 
         }
 
-        onFinished(result)
+        onFinished(Result.success(lotrCharacters))
     }
 }

@@ -12,9 +12,7 @@ import java.io.IOException
 
 class LOTRServiceWithOkHttpAndGson(val baseUrl: String = LOTR_API_BASE_URL, val client: OkHttpClient): LOTR() {
 
-    override fun getCharacters(onFinished: (List<LOTRCharacter>) -> Unit,
-                               onError: ((Exception) -> Unit)?,
-                               onLoading: (() -> Unit)?) {
+    override fun getCharacters(onFinished: (Result<List<LOTRCharacter>>) -> Unit) {
 
         // only used for parsing JSON response
         data class Character(val _id: String, val birth: String,
@@ -28,16 +26,14 @@ class LOTRServiceWithOkHttpAndGson(val baseUrl: String = LOTR_API_BASE_URL, val 
             .addHeader("Authorization", "Bearer $LOTR_API_TOKEN")
             .build()
 
-        onLoading?.invoke()
-
         val response: ResponseBody? = client.newCall(request).execute().body
         if (response != null) {
             val responseObj = Gson().fromJson(response.string(), GetCharactersResponse::class.java)
-            onFinished(responseObj.docs.map {
+            onFinished(Result.success(responseObj.docs.map {
                 LOTRCharacter(it._id, it.birth, it.death, it.gender.orEmpty(), it.name)
-            })
+            }))
         } else {
-            onError?.invoke(IOException("response was null"))
+            onFinished(Result.failure(IOException("response was null")))
         }
     }
 }
