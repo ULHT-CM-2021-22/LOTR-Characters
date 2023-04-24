@@ -48,6 +48,10 @@ class MainActivity : AppCompatActivity() {
                                 Log.i("APP", "Passing ${charactersUI.size} characters to CharactersListActivity")
                                 intent.putParcelableArrayListExtra("characters", charactersUI)
                                 startActivity(intent)
+
+                                // dismiss the circular progress indicator
+                                binding.getCharactersBtn.visibility = View.VISIBLE
+                                binding.progressBar.visibility = View.INVISIBLE
                             }
                     },
                     onFailure = {
